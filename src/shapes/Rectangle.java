@@ -5,6 +5,9 @@ public class Rectangle extends ShapeCollection implements Shape {
     private int height;
 
     public Rectangle(int width, int height) {
+        if (width<=0 || height<=0){
+            throw new InvalidRectangleDefinitionException(width, height);
+        }
         this.width = width;
         this.height = height;
     }
