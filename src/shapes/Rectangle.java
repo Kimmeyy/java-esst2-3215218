@@ -1,6 +1,6 @@
 package src.shapes;
 
-public class Rectangle implements Shape {
+public class Rectangle extends ShapeCollection implements Shape {
     private int width;
     private int height;
 

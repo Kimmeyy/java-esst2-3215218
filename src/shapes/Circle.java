@@ -1,6 +1,6 @@
 package src.shapes;
 
-public class Circle implements Shape {
+public class Circle extends ShapeCollection implements Shape {
 
     private int radius;
 
@@ -16,13 +16,14 @@ public class Circle implements Shape {
         return 2 * Math.PI * radius;
     }
 
-   // Wenn man die equals-Methode überschreibt, muss auch die hashcode-Methode überschrieben werden
+
+    // Wenn man die equals-Methode überschreibt, muss auch die hashcode-Methode überschrieben werden
     public boolean equals(Object o){
         if(!(o instanceof Circle)){
             return false;
         }
         Circle circle = (Circle) o;
-        return this.radius== circle.radius;
+        return this.radius == circle.radius;
     }
 
     public int hashCode(){
