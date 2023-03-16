@@ -1,4 +1,6 @@
-package src.shapes;
+package src.streams;
+
+import src.shapes.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,9 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class ShapeCollection {
+public class ShapeStreams {
 
     public static void main(String[] args) {
+
+        var stream = new ShapeStreams();
 
         var circle = new Circle(5);
         var rectangle = new Rectangle(5, 10);
@@ -27,13 +31,19 @@ public class ShapeCollection {
         collection2.add(square);
         collection2.add(triangle);
 
-        var shapeCollection = new ShapeCollection();
-        System.out.println(circle.getArea());
-        System.out.println(rectangle.getArea());
-        System.out.println(triangle.getArea());
-        System.out.println(shapeCollection.getSum(collection1));
-        System.out.println(shapeCollection.getSum(collection2));
+        stream.getSumAsStream(collection1);
+        stream.getSumAsStream(collection2);
 
+        stream.getSumAsStreamEasier(collection1);
+        stream.getSumAsStreamEasier(collection2);
+    }
+
+    public void getSumAsStream(Collection<Shape> shapes){
+        // ODER: shapes.stream()
+        var collectionStream1 = Stream.of(shapes)
+                .mapToInt(shape -> (int) getSum(shape))
+                .reduce(0, Integer::sum);
+        System.out.println(collectionStream1);
     }
 
     public double getSum(Collection<Shape> shapes){
@@ -42,5 +52,13 @@ public class ShapeCollection {
             erg = erg + shape.getArea();
         }
         return erg;
+    }
+
+    public void getSumAsStreamEasier(Collection<Shape> shapes) {
+        double sum = shapes.stream()
+                // hiermit mapped man die Shapes auf den Flächenwert
+                .mapToDouble(Shape::getArea)
+                .sum();
+        System.out.println(sum);
     }
 }
